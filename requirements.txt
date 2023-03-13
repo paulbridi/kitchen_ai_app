@@ -1,0 +1,17 @@
+pytest
+pylint
+ipdb
+jupyterlab
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+Tensorflow
+google.cloud
+roboflow
+Pillow
+streamlit
+requests
+io
+cv2
