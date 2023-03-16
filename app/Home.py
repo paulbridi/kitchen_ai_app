@@ -1,33 +1,55 @@
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
 
+import requests
+
+
 ################## WEBPAGE LAYOUT ###########################
 # set favicon and title of the page in the browser tab
 st.set_page_config(
-            page_title="Your Kitchen AI",
-            page_icon=":cooking:",
-            # layout="centered",
-            # initial_sidebar_state="auto"
-)
+            page_title="RECIPE RACCOON",
+            page_icon=":raccoon:",
+            layout="wide",
+            initial_sidebar_state="collapsed")
 
-# Load local css file to apply custom styling
-# def local_css(file_name):
-#     with open(file_name) as f:
-#         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+#### Usable background images
+# "https://images.pexels.com/photos/12221953/pexels-photo-12221953.jpeg"
+# "https://images.pexels.com/photos/3952055/pexels-photo-3952055.jpeg"
 
-# local_css("style.css")
+#### CSS Styles ####
+st.markdown("""
+<meta charset="UTF-8">
+<style>
+.stApp {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("https://images.pexels.com/photos/2074130/pexels-photo-2074130.jpeg");
+    background-size: 1500px 1000px;
+    position: fixed;
+    background-color: #77AF9C
+}
+.header {
+    font-size:100px;
+    text-align:center;
+    color: #F1E9DA
+}
+.sub_header {
+    font-size:50px;
+    text-align:center;
+    color: #F1E9DA
+}
+</style>
+""", unsafe_allow_html=True)
 
 # Title
-st.title(f"YOUR KITCHEN AI :cooking:")
-st.write(f"Use your food ingredients in a smarter way\n")
+for i in range(5):
+    st.markdown("")
+st.markdown('<p class="header"><b>&#127859 RECIPE RACCOON<b> &#129437</p>', unsafe_allow_html=True)
+st.markdown('<p class="sub_header"><b>Unleash Your Inner Chef<b></p>', unsafe_allow_html=True)
 
-# How it works
-st.header("How it works")
-col_a, col_b, col_c = st.columns(3)
-col_a.markdown(f":one:\n Upload an image of your fridge and our AI will identify the food ingredients inside")
-col_b.markdown(f":two:\n Specify your preferences and keywords")
-col_c.markdown(f":three:\n Our app will suggest recipes based on ingredients and preferences you provide")
 
-get_started = st.button("Let's Get Started !")
+st.markdown("----")
+columns = st.columns((2, 1, 2))
+get_started = columns[1].button("Let's Get Started !")
 if get_started:
-    switch_page("Step_1_Upload_Image")
+    switch_page("Intro")
+st.markdown("----")
