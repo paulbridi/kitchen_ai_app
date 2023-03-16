@@ -7,11 +7,12 @@ pandas
 matplotlib
 seaborn
 scikit-learn
-Tensorflow
+tensorflow
 google.cloud
 roboflow
 Pillow
 streamlit
+streamlit_extras
 requests
 io
 cv2
