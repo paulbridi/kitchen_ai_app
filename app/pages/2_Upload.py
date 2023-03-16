@@ -5,6 +5,8 @@ import os
 from packages.crop_fridge import crop_fridge
 import cv2
 import requests
+from streamlit_extras.switch_page_button import switch_page
+
 
 #### set favicon and title of the page in the browser tab
 st.set_page_config(
@@ -13,9 +15,8 @@ st.set_page_config(
             layout="wide",
             initial_sidebar_state="collapsed")
 
-url = 'http://127.0.0.1:8003'
+url = 'http://0.0.0.0:8000'
 # url = "https://kitchen-api-hebwau5dkq-ew.a.run.app"
-
 
 st.title("Upload an image of your food ingredients here!")
 ## image uploader tab
@@ -50,7 +51,6 @@ if uploaded_file is not None:
     from_bytes = np.frombuffer(byte_arr, dtype = opencv_image.dtype)
     files = {'my_file': byte_arr}
 
-
 # col1, col2, col3 = st.columns(3)
 if st.button('Ready, steady, cook!'):
 
@@ -70,9 +70,6 @@ if st.button('Ready, steady, cook!'):
 
     params = {"ingredients": ingredients_list_str, "preferences": preferences_list_str}
 
-    # Loop through cropped images, returning image, ingredient, and confidence
-
-
     # for i, ingredient in enumerate(column_names['ingredients']):
     # st.markdown(ingredient.capitalize())
 
@@ -91,30 +88,42 @@ if st.button('Ready, steady, cook!'):
     #             st.image(image[0], use_column_width=True)
     #             st.write(type(image[0]))
 
+    st.write(response.json()['list'])
+    st.write(response.json()['list'][4*0][0].capitalize())
+    # st.write('{:.0%}'.format(response.json()['list'][4*0][1]))
+    st.write(num_ingredients)
+
+
     for i in range(0,num_ingredients): # number of rows in your table! = 2
         cols = st.columns(4) # number of columns in each row! = 2
         # first column of the ith row
+
+
         try:
-            cols[0].write(f"{roboflow_ingredients[4*i].capitalize()} {'{:.0%}'.format(roboflow_confidences[i])}")
+            cols[0].write(f"{response.json()['list'][4*i][0].capitalize()} {'{:.0%}'.format(float(response.json()['list'][4*i][1]))}")
+            # cols[0].write(f"{roboflow_ingredients[4*i].capitalize()} {'{:.0%}'.format(roboflow_confidences[i])}")
             cols[0].image(images[4*i][0])
         except:
             pass
 
         try:
-            cols[1].write(f"{roboflow_ingredients[(4*i)+1].capitalize()} {'{:.0%}'.format(roboflow_confidences[i])}")
+            cols[1].write(f"{response.json()['list'][(4*i)+1][0].capitalize()} {'{:.0%}'.format(float(response.json()['list'][(4*i)+1][1]))}")
+            # cols[1].write(f"{roboflow_ingredients[(4*i)+1].capitalize()} {'{:.0%}'.format(roboflow_confidences[i])}")
             cols[1].image(images[(4*i)+1][0])
         except:
             pass
 
         try:
-            cols[2].write(f"{roboflow_ingredients[(4*i)+2].capitalize()} {'{:.0%}'.format(roboflow_confidences[i])}")
+            cols[2].write(f"{response.json()['list'][(4*i)+2][0].capitalize()} {'{:.0%}'.format(float(response.json()['list'][(4*i)+2][1]))}")
+            # cols[2].write(f"{roboflow_ingredients[(4*i)+2].capitalize()} {'{:.0%}'.format(roboflow_confidences[i])}")
             cols[2].image(images[(4*i)+2][0])
 
         except:
             pass
 
         try:
-            cols[3].write(f"{roboflow_ingredients[(4*i)+3].capitalize()} {'{:.0%}'.format(roboflow_confidences[i])}")
+            cols[3].write(f"{response.json()['list'][(4*i)+3][0].capitalize()} {'{:.0%}'.format(float(response.json()['list'][(4*i)+3][1]))}")
+            # cols[3].write(f"{roboflow_ingredients[(4*i)+3].capitalize()} {'{:.0%}'.format(roboflow_confidences[i])}")
             cols[3].image(images[(4*i)+3][0])
         except:
             pass
@@ -122,3 +131,9 @@ if st.button('Ready, steady, cook!'):
 
     st.session_state['ings'] = ingredients_list_str
     st.session_state['prefs'] = preferences_list_str
+
+    columns = st.columns((2, 1, 2))
+    get_recipes = columns[1].button("Get me recipes")
+
+    if get_recipes:
+        switch_page("Recipes")

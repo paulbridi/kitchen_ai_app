@@ -9,17 +9,15 @@ st.set_page_config(
             initial_sidebar_state="collapsed")
 
 
-url = 'http://127.0.0.1:8003'
+url = 'http://0.0.0.0:8000'
+# url = "https://kitchen-api-hebwau5dkq-ew.a.run.app"
+
 
 if 'ings' not in st.session_state:
     st.session_state['ings'] = 0
 
 if 'prefs' not in st.session_state:
     st.session_state['prefs'] = 0
-
-st.write(st.session_state['ings'])
-st.write(st.session_state['prefs'])
-
 
 # # returning ingredient names, images and preferences
 # st.subheader(f"I can see ..[include CNN returned predictions here]")
@@ -83,8 +81,7 @@ def get_recipes_expand(response_recipes):
                 # st.markdown("")
 
             st.markdown(f"#### Ingredients")
-            for i, ingredient in enumerate(column_names['ingredients']):
-                st.markdown(ingredient.capitalize())
+            st.markdown(', '.join(column_names['ingredients']))
 
             st.markdown(f"\n#### Instructions")
             for i, step in enumerate(column_names['instructions'],1):
@@ -97,10 +94,7 @@ def get_recipes_expand(response_recipes):
                 st.markdown(f"**Image not provided**")
 
 
-# make recipes api call button
-if st.button("Let's get some recipes!"):
-    st.markdown("")
-    st.markdown(f"#### These are the top 5 recipes based on the ingredients and preferences you provided:")
+try:
     get_recipes_expand(response_recipes)
-else:
-    pass
+except:
+    st.markdown(f"Please upload fridge first!")
