@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
-
+from PIL import Image
 import requests
 
 
@@ -41,10 +41,13 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Title
-for i in range(5):
+for i in range(6):
     st.markdown("")
-st.markdown('<p class="header"><b>&#127859 RECIPE RACCOON<b> &#129437</p>', unsafe_allow_html=True)
-st.markdown('<p class="sub_header"><b>Unleash Your Inner Chef<b></p>', unsafe_allow_html=True)
+col = st.columns((0.5,0.5,3,0.5,0.5))
+# image = Image.open("app/logo_1.jpeg")
+col[2].image("https://raw.githubusercontent.com/paulbridi/kitchen_ai_app/master/logo_1.jpeg")
+# st.markdown('<p class="header"><b>&#127859 RECIPE RACCOON<b> &#129437</p>', unsafe_allow_html=True)
+# st.markdown('<p class="sub_header"><b>Unleash Your Inner Chef<b></p>', unsafe_allow_html=True)
 
 
 st.markdown("----")
