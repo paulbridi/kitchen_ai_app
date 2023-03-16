@@ -76,12 +76,42 @@ if st.button('Ready, steady, cook!'):
     cols = st.columns(num_ingredients)
 
     # Display each image in a separate column
-    with st.container():
-        for i, image in enumerate(images):
-            with cols[i]:
-                # st.write(f"{response.json()['list'][i][0].capitalize()} ({response.json()['list'][i][1]}%)")
-                st.write(f"{roboflow_ingredients[i].capitalize()} {'{:.1%}'.format(roboflow_confidences[i])}")
-                st.image(image[0], use_column_width=True)
+    # with st.container():
+    #     for i, image in enumerate(images):
+    #         with cols[i]:
+    #             # st.write(f"{response.json()['list'][i][0].capitalize()} ({response.json()['list'][i][1]}%)")
+    #             st.write(f"{roboflow_ingredients[i].capitalize()} {'{:.1%}'.format(roboflow_confidences[i])}")
+    #             st.image(image[0], use_column_width=True)
+    #             st.write(type(image[0]))
+
+    for i in range(0,num_ingredients): # number of rows in your table! = 2
+        cols = st.columns(4) # number of columns in each row! = 2
+        # first column of the ith row
+        try:
+            cols[0].write(f"{roboflow_ingredients[4*i].capitalize()} {'{:.0%}'.format(roboflow_confidences[i])}")
+            cols[0].image(images[4*i][0])
+        except:
+            pass
+
+        try:
+            cols[1].write(f"{roboflow_ingredients[(4*i)+1].capitalize()} {'{:.0%}'.format(roboflow_confidences[i])}")
+            cols[1].image(images[(4*i)+1][0])
+        except:
+            pass
+
+        try:
+            cols[2].write(f"{roboflow_ingredients[(4*i)+2].capitalize()} {'{:.0%}'.format(roboflow_confidences[i])}")
+            cols[2].image(images[(4*i)+2][0])
+
+        except:
+            pass
+
+        try:
+            cols[3].write(f"{roboflow_ingredients[(4*i)+3].capitalize()} {'{:.0%}'.format(roboflow_confidences[i])}")
+            cols[3].image(images[(4*i)+3][0])
+        except:
+            pass
+
 
     st.session_state['ings'] = ingredients_list_str
     st.session_state['prefs'] = preferences_list_str
